@@ -366,7 +366,7 @@ const menuOptions = ref([]);
 // 初始菜单表单数据
 const initialMenuFormData = ref({
   id: undefined,
-  parentId: "0",
+  parentId: 0,
   visible: 1,
   sort: 1,
   type: MenuTypeEnum.MENU, // 默认菜单
@@ -422,7 +422,7 @@ function handleRowClick(row) {
 function handleOpenDialog(parentId, menuId) {
   MenuAPI.getOptions(true)
     .then((data) => {
-      menuOptions.value = [{ value: "0", label: "顶级菜单", children: data }];
+      menuOptions.value = [{ value: 0, label: "顶级菜单", children: data }];
     })
     .then(() => {
       dialog.visible = true;
@@ -434,7 +434,7 @@ function handleOpenDialog(parentId, menuId) {
         });
       } else {
         dialog.title = "新增菜单";
-        formData.value.parentId = parentId?.toString();
+        // formData.value.parentId = parentId?.toString();
       }
     });
 }
@@ -519,7 +519,7 @@ function resetForm() {
   menuFormRef.value.clearValidate();
   formData.value = {
     id: undefined,
-    parentId: "0",
+    parentId: 0,
     visible: 1,
     sort: 1,
     type: MenuTypeEnum.MENU, // 默认菜单
