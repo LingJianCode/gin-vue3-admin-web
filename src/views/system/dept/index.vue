@@ -16,8 +16,8 @@
             <el-option :value="0" label="禁用" />
           </el-select>
         </el-form-item>
-        <el-form-item>
-          <el-button class="filter-item" type="primary" icon="search" @click="handleQuery">
+        <el-form-item >
+          <el-button v-hasPerm="['sys:dept:query']" class="filter-item" type="primary" icon="search" @click="handleQuery">
             搜索
           </el-button>
           <el-button icon="refresh" @click="handleResetQuery">重置</el-button>

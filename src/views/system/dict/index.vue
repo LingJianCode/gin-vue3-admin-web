@@ -11,8 +11,8 @@
             @keyup.enter="handleQuery"
           />
         </el-form-item>
-        <el-form-item>
-          <el-button type="primary" icon="search" @click="handleQuery()">搜索</el-button>
+        <el-form-item >
+          <el-button v-hasPerm="['sys:dict:query']" type="primary" icon="search" @click="handleQuery()">搜索</el-button>
           <el-button icon="refresh" @click="handleResetQuery()">重置</el-button>
         </el-form-item>
       </el-form>
@@ -20,10 +20,10 @@
 
     <el-card shadow="never">
       <div class="mb-[10px]">
-        <el-button type="success" icon="plus" @click="handleAddClick()">新增</el-button>
-        <el-button type="danger" :disabled="ids.length === 0" icon="delete" @click="handleDelete()">
+        <el-button v-hasPerm="['sys:dict:add']" type="success" icon="plus" @click="handleAddClick()">新增</el-button>
+        <!-- <el-button v-hasPerm="['sys:dict:delete']" type="danger" :disabled="ids.length === 0" icon="delete" @click="handleDelete()">
           删除
-        </el-button>
+        </el-button> -->
       </div>
 
       <el-table
@@ -53,6 +53,7 @@
             </el-button>
 
             <el-button
+              v-hasPerm="['sys:dict:edit']"
               type="primary"
               link
               size="small"
@@ -62,6 +63,7 @@
               编辑
             </el-button>
             <el-button
+              v-hasPerm="['sys:dict:delete']"
               type="danger"
               link
               size="small"
