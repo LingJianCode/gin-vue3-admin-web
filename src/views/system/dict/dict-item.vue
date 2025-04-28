@@ -21,7 +21,7 @@
     <el-card shadow="never">
       <div class="mb-[10px]">
         <el-button type="success" icon="plus" @click="handleOpenDialog()">新增</el-button>
-        <el-button type="danger" :disabled="ids.length === 0" icon="delete" @click="handleDelete()">
+        <el-button type="danger" :disabled="ids.length === 0" icon="delete" v-hasPerm="['sys:dict:delete']" @click="handleDelete()">
           删除
         </el-button>
       </div>

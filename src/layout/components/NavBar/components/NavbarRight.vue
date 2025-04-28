@@ -16,6 +16,11 @@
 
       <!-- 通知下拉 -->
       <NoticeDropdown />
+
+      <!-- 刷新用户信息 -->
+      <el-tooltip content="刷新用户信息" effect="dark" placement="bottom">
+        <el-icon  @click="refreshCurrentUserInfo"><Refresh /></el-icon>
+      </el-tooltip>
     </template>
 
     <!-- 用户头像（个人中心、注销登录等） -->
@@ -97,6 +102,18 @@ function logout() {
         router.push(`/login?redirect=${route.fullPath}`);
       });
   });
+}
+
+/**
+ * 刷新用户信息
+ */
+async function refreshCurrentUserInfo() {
+  try {
+    // 获取用户信息
+    await userStore.getUserInfo();
+  } catch (error) {
+    console.error("刷新失败:", error);
+  }
 }
 </script>
 

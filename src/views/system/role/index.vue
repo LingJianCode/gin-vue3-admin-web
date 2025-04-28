@@ -11,7 +11,7 @@
           />
         </el-form-item>
 
-        <el-form-item>
+        <el-form-item v-hasPerm="'sys:role:query'">
           <el-button type="primary" icon="search" @click="handleQuery">搜索</el-button>
           <el-button icon="refresh" @click="handleResetQuery">重置</el-button>
         </el-form-item>
@@ -20,10 +20,10 @@
 
     <el-card shadow="never">
       <div class="mb-10px">
-        <el-button type="success" icon="plus" @click="handleOpenDialog()">新增</el-button>
-        <el-button type="danger" :disabled="ids.length === 0" icon="delete" @click="handleDelete()">
+        <el-button v-hasPerm="'sys:role:add'" type="success" icon="plus" @click="handleOpenDialog()">新增</el-button>
+        <!-- <el-button type="danger" :disabled="ids.length === 0" icon="delete" @click="handleDelete()">
           删除
-        </el-button>
+        </el-button> -->
       </div>
 
       <el-table
@@ -59,6 +59,7 @@
               分配权限
             </el-button>
             <el-button
+              v-hasPerm="'sys:role:edit'"
               type="primary"
               size="small"
               link
@@ -68,6 +69,7 @@
               编辑
             </el-button>
             <el-button
+              v-hasPerm="'sys:role:delete'"
               type="danger"
               size="small"
               link

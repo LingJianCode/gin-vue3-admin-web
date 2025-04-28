@@ -64,7 +64,7 @@
               >
                 新增
               </el-button>
-              <el-button
+              <!-- <el-button
                 v-hasPerm="'sys:user:delete'"
                 type="danger"
                 icon="delete"
@@ -72,9 +72,9 @@
                 @click="handleDelete()"
               >
                 删除
-              </el-button>
+              </el-button> -->
             </div>
-            <div>
+            <!-- <div>
               <el-button
                 v-hasPerm="'sys:user:import'"
                 icon="upload"
@@ -86,7 +86,7 @@
               <el-button v-hasPerm="'sys:user:export'" icon="download" @click="handleExport">
                 导出
               </el-button>
-            </div>
+            </div> -->
           </div>
 
           <el-table v-loading="loading" :data="pageData" @selection-change="handleSelectionChange">
@@ -233,7 +233,7 @@
     </el-drawer>
 
     <!-- 用户导入 -->
-    <UserImport v-model="importDialogVisible" @import-success="handleQuery()" />
+    <!-- <UserImport v-model="importDialogVisible" @import-success="handleQuery()" /> -->
   </div>
 </template>
 

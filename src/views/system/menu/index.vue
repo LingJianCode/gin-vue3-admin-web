@@ -10,7 +10,7 @@
             @keyup.enter="handleQuery"
           />
         </el-form-item>
-        <el-form-item>
+        <el-form-item v-hasPerm="['sys:menu:query']">
           <el-button type="primary" icon="search" @click="handleQuery">搜索</el-button>
           <el-button icon="refresh" @click="handleResetQuery">重置</el-button>
         </el-form-item>
