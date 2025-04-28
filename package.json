@@ -1,6 +1,6 @@
 {
-  "name": "vue3-element-admin-js",
-  "description": "Vue3 + Vite + JavaScript + Element-Plus 的后台管理模板，vue3-element-admin 的 JavaScript 版本",
+  "name": "my-ops-vue",
+  "description": "my-ops-vue",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -111,8 +111,8 @@
   "eslintConfig": {
     "configFile": "eslint.config.mjs"
   },
-  "repository": "https://gitee.com/youlaiorg/vue3-element-admin.git",
-  "author": "有来开源组织",
+  "repository": "https://gitee.com/LingJianCode/my-ops-vue.git",
+  "author": "LingJianCode",
   "license": "MIT",
   "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }
