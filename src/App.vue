@@ -23,15 +23,21 @@
 import { useAppStore, useSettingsStore, useUserStore } from "@/store";
 import defaultSettings from "@/settings";
 import { ThemeMode } from "@/enums/settings/theme.enum";
-const watermarkContent = ref()
-watermarkContent.value = useUserStore().userInfo.username;
+
+
 
 const appStore = useAppStore();
 const settingsStore = useSettingsStore();
+const userStore = useUserStore();
 
+// 下面是箭头函数的简写，不用return的情况
 const locale = computed(() => appStore.locale);
 const size = computed(() => appStore.size);
 const watermarkEnabled = computed(() => settingsStore.watermarkEnabled);
+// 箭头函数使用return的情况
+const watermarkContent = computed(() => {
+  return userStore.userInfo.username
+})
 
 // 明亮/暗黑主题水印字体颜色适配
 const fontColor = computed(() => {
