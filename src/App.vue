@@ -1,9 +1,16 @@
 <template>
   <el-config-provider :locale="locale" :size="size">
     <!-- 开启水印 -->
-    <el-watermark
+    <!-- <el-watermark
       :font="{ color: fontColor }"
       :content="watermarkEnabled ? defaultSettings.watermarkContent : ''"
+      :z-index="9999"
+      class="wh-full"
+    > -->
+
+    <el-watermark
+      :font="{ color: fontColor }"
+      :content="watermarkEnabled ? watermarkContent : ''"
       :z-index="9999"
       class="wh-full"
     >
@@ -13,9 +20,11 @@
 </template>
 
 <script setup>
-import { useAppStore, useSettingsStore } from "@/store";
+import { useAppStore, useSettingsStore, useUserStore } from "@/store";
 import defaultSettings from "@/settings";
 import { ThemeMode } from "@/enums/settings/theme.enum";
+const watermarkContent = ref()
+watermarkContent.value = useUserStore().userInfo.username;
 
 const appStore = useAppStore();
 const settingsStore = useSettingsStore();
