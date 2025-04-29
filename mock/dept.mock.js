@@ -35,8 +35,8 @@ export default defineMock([
         {
           id: 1,
           parentId: 0,
-          name: "有来技术",
-          code: "YOULAI",
+          name: "公司",
+          code: "COMPANY",
           sort: 1,
           status: 1,
           children: [
@@ -128,8 +128,8 @@ export default defineMock([
 const deptMap = {
   1: {
     id: 1,
-    name: "有来技术",
-    code: "YOULAI",
+    name: "公司",
+    code: "COMPANY",
     parentId: 0,
     status: 1,
     sort: 1,

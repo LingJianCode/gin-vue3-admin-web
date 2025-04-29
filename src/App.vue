@@ -36,7 +36,7 @@ const size = computed(() => appStore.size);
 const watermarkEnabled = computed(() => settingsStore.watermarkEnabled);
 // 箭头函数使用return的情况
 const watermarkContent = computed(() => {
-  return userStore.userInfo.username
+  return userStore.userInfo.username ? userStore.userInfo.username : defaultSettings.watermarkContent
 })
 
 // 明亮/暗黑主题水印字体颜色适配

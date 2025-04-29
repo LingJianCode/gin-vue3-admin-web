@@ -111,8 +111,7 @@
 
     <!-- 登录页底部 -->
     <el-text size="small" class="py-2.5! fixed bottom-0 text-center">
-      Copyright © 2021 - 2025 youlai.tech All Rights Reserved.
-      <a href="http://beian.miit.gov.cn/" target="_blank">皖ICP备20006496号-2</a>
+      Copyright © 2025 my-ops-vue All Rights Reserved.
     </el-text>
   </div>
 </template>

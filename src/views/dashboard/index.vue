@@ -76,32 +76,7 @@ import { formatGrowthRate } from "@/utils";
 const userStore = useUserStore();
 
 // 当前通知公告列表
-const vesionList = ref([
-  {
-    id: "1",
-    title: "v2.4.0",
-    date: "2021-09-01 00:00:00",
-    content: "实现基础框架搭建，包含权限管理、路由系统等核心功能。",
-    link: "https://gitee.com/youlaiorg/vue3-element-admin/releases",
-    tag: "里程碑",
-  },
-  {
-    id: "1",
-    title: "v2.4.0",
-    date: "2021-09-01 00:00:00",
-    content: "实现基础框架搭建，包含权限管理、路由系统等核心功能。",
-    link: "https://gitee.com/youlaiorg/vue3-element-admin/releases",
-    tag: "里程碑",
-  },
-  {
-    id: "1",
-    title: "v2.4.0",
-    date: "2021-09-01 00:00:00",
-    content: "实现基础框架搭建，包含权限管理、路由系统等核心功能。",
-    link: "https://gitee.com/youlaiorg/vue3-element-admin/releases",
-    tag: "里程碑",
-  },
-]);
+const vesionList = ref([]);
 
 // 当前时间（用于计算问候语）
 const currentDate = new Date();
