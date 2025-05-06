@@ -38,6 +38,17 @@ const RoleAPI = {
       method: "get",
     });
   },
+  /**
+   * 获取角色的API ID集合
+   * @param {string} roleId 角色ID
+   * @returns {Promise} 角色的API ID集合
+   */
+  getRoleApiIds(roleId) {
+    return request({
+      url: `${ROLE_BASE_URL}/${roleId}/apiIds`,
+      method: "get",
+    });
+  },
 
   /**
    * 分配菜单权限

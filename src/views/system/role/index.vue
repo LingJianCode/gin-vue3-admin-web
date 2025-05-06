@@ -147,56 +147,106 @@
       :title="'【' + checkedRole.name + '】权限分配'"
       :size="drawerSize"
     >
-      <div class="flex-x-between">
-        <el-input v-model="permKeywords" clearable class="w-[150px]" placeholder="菜单权限名称">
-          <template #prefix>
-            <Search />
-          </template>
-        </el-input>
 
-        <div class="flex-center ml-5">
-          <el-button type="primary" size="small" plain @click="togglePermTree">
-            <template #icon>
-              <Switch />
+    <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tab-pane label="菜单权限" name="menu">
+        <div class="flex-x-between">
+          <el-input v-model="permKeywords" clearable class="w-[150px]" placeholder="菜单名称">
+            <template #prefix>
+              <el-icon><Search /></el-icon>
             </template>
-            {{ isExpanded ? "收缩" : "展开" }}
-          </el-button>
-          <el-checkbox
-            v-model="parentChildLinked"
-            class="ml-5"
-            @change="handleparentChildLinkedChange"
-          >
-            父子联动
-          </el-checkbox>
+          </el-input>
 
-          <el-tooltip placement="bottom">
-            <template #content>
-              如果只需勾选菜单权限，不需要勾选子菜单或者按钮权限，请关闭父子联动
-            </template>
-            <el-icon class="ml-1 color-[--el-color-primary] inline-block cursor-pointer">
-              <QuestionFilled />
-            </el-icon>
-          </el-tooltip>
+          <div class="flex-center ml-5">
+            <el-button type="primary" size="small" plain @click="togglePermTree">
+              <template #icon>
+                <Switch />
+              </template>
+              {{ isExpanded ? "收缩" : "展开" }}
+            </el-button>
+            <el-checkbox
+              v-model="parentChildLinked"
+              class="ml-5"
+              @change="handleparentChildLinkedChange"
+            >
+              父子联动
+            </el-checkbox>
+
+            <el-tooltip placement="bottom">
+              <template #content>
+                如果只需勾选菜单权限，不需要勾选子菜单或者按钮权限，请关闭父子联动
+              </template>
+              <el-icon class="ml-1 color-[--el-color-primary] inline-block cursor-pointer">
+                <QuestionFilled />
+              </el-icon>
+            </el-tooltip>
+          </div>
         </div>
-      </div>
 
-      <el-tree
-        ref="permTreeRef"
-        node-key="value"
-        show-checkbox
-        :data="menuPermOptions"
-        :filter-node-method="handlePermFilter"
-        :default-expand-all="true"
-        :check-strictly="!parentChildLinked"
-        class="mt-5"
-      >
-        <template #default="{ data }">
-          {{ data.label }}
-        </template>
-      </el-tree>
-      <template #footer>
+        <!-- 菜单权限树 -->
+        <el-tree
+          ref="permTreeRef"
+          node-key="value"
+          show-checkbox
+          :data="menuPermOptions"
+          :filter-node-method="handlePermFilter"
+          :default-expand-all="true"
+          :check-strictly="!parentChildLinked"
+          class="mt-5"
+        >
+          <template #default="{ data }">
+            {{ data.label }}
+          </template>
+        </el-tree>
+      </el-tab-pane>
+
+
+      <el-tab-pane label="API权限" name="api">
+        <div class="flex-x-between">
+          <el-input v-model="permKeywords" clearable class="w-[150px]" placeholder="API名称">
+            <template #prefix>
+              <el-icon><Search /></el-icon>
+            </template>
+          </el-input>
+
+          <div class="flex-center ml-5">
+            <el-button type="primary" size="small" plain @click="togglePermTree">
+              <template #icon>
+                <Switch />
+              </template>
+              {{ isExpanded ? "收缩" : "展开" }}
+            </el-button>
+          </div>
+        </div>
+        <!-- API权限树 -->
+        <el-tree
+          ref="apiPermTreeRef"
+          node-key="apiValue"
+          show-checkbox
+          :data="apiPermOptions"
+          :filter-node-method="handleApiPermFilter"
+          :default-expand-all="true"
+          check-strictly=false
+          class="mt-5"
+        >
+          <template #default="{ data }">
+            {{ data.label }}
+          </template>
+        </el-tree>
+      </el-tab-pane>
+    </el-tabs>
+
+      <template #footer v-if="activeName === 'menu'">
         <div class="dialog-footer">
-          <el-button type="primary" @click="handleAssignPermSubmit">确 定</el-button>
+          <!-- <span>menu</span> -->
+          <el-button type="primary" @click="handleAssignMenuPermSubmit">确 定</el-button>
+          <el-button @click="assignPermDialogVisible = false">取 消</el-button>
+        </div>
+      </template>
+      <template #footer v-if="activeName === 'api'">
+        <div class="dialog-footer">
+          <!-- <span>api</span> -->
+          <el-button type="primary" @click="handleAssignApiPermSubmit">确 定</el-button>
           <el-button @click="assignPermDialogVisible = false">取 消</el-button>
         </div>
       </template>
@@ -210,6 +260,7 @@ import { DeviceEnum } from "@/enums/settings/device.enum";
 
 import RoleAPI from "@/api/system/role.api";
 import MenuAPI from "@/api/system/menu.api";
+import ApiAPI from "@/api/system/api.api";
 
 defineOptions({
   name: "Role",
@@ -221,10 +272,16 @@ const appStore = useAppStore();
 const queryFormRef = ref();
 const roleFormRef = ref();
 const permTreeRef = ref();
+const apiPermTreeRef = ref();
 
 const loading = ref(false);
 const ids = ref([]);
 const total = ref(0);
+
+const activeName = ref('menu')
+const handleClick = (tab) => {
+  console.log(tab.props.label, tab.props.name)
+}
 
 const queryParams = reactive({
   pageNum: 1,
@@ -235,7 +292,8 @@ const queryParams = reactive({
 const roleList = ref();
 // 菜单权限下拉
 const menuPermOptions = ref([]);
-
+// api权限下拉
+const apiPermOptions = ref([]);
 // 弹窗
 const dialog = reactive({
   title: "",
@@ -375,6 +433,7 @@ function handleDelete(roleId) {
 async function handleOpenAssignPermDialog(row) {
   const roleId = row.id;
   if (roleId) {
+    activeName.value = 'menu'
     assignPermDialogVisible.value = true;
     loading.value = true;
 
@@ -383,6 +442,8 @@ async function handleOpenAssignPermDialog(row) {
 
     // 获取所有的菜单
     menuPermOptions.value = await MenuAPI.getOptions();
+    // 获取所有api
+    apiPermOptions.value = await ApiAPI.getOptions();
 
     // 回显角色已拥有的菜单
     RoleAPI.getRoleMenuIds(roleId)
@@ -393,11 +454,20 @@ async function handleOpenAssignPermDialog(row) {
       .finally(() => {
         loading.value = false;
       });
+    // 回显角色已拥有的API
+    RoleAPI.getRoleApiIds(roleId)
+      .then((data) => {
+        const checkedApiIds = data;
+        checkedApiIds.forEach((apiId) => apiPermTreeRef.value.setChecked(apiId, true, false));
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   }
 }
 
 // 分配菜单权限提交
-function handleAssignPermSubmit() {
+function handleAssignMenuPermSubmit() {
   const roleId = checkedRole.value.id;
   if (roleId) {
     const checkedMenuIds = permTreeRef
@@ -441,9 +511,19 @@ function handlePermFilter(value, data) {
   return data.label.includes(value);
 }
 
+function handleApiPermFilter(value, data) {
+  if (!value) return true;
+  return data.label.includes(value);
+}
+
 // 父子菜单节点是否联动
 function handleparentChildLinkedChange(val) {
   parentChildLinked.value = val;
+}
+
+// 分配API权限
+function handleAssignApiPermSubmit(val) {
+  console.log(val)
 }
 
 onMounted(() => {
