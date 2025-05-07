@@ -65,6 +65,20 @@ const RoleAPI = {
   },
 
   /**
+   * 分配api权限
+   * @param {string} roleId 角色ID
+   * @param {Array} data 菜单ID集合
+   * @returns {Promise} 分配结果
+   */
+  updateRoleApiIds(roleId, data) {
+      return request({
+        url: `${ROLE_BASE_URL}/${roleId}/apiIds`,
+        method: "put",
+        data: data,
+      });
+    },
+
+  /**
    * 获取角色表单数据
    * @param {string} id 角色ID
    * @returns {Promise} 角色表单数据

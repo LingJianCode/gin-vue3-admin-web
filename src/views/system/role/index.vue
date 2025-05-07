@@ -203,30 +203,20 @@
 
       <el-tab-pane label="API权限" name="api">
         <div class="flex-x-between">
-          <el-input v-model="permKeywords" clearable class="w-[150px]" placeholder="API名称">
+          <el-input v-model="apiPermKeywords" clearable class="w-[150px]" placeholder="API名称">
             <template #prefix>
               <el-icon><Search /></el-icon>
             </template>
           </el-input>
-
-          <div class="flex-center ml-5">
-            <el-button type="primary" size="small" plain @click="togglePermTree">
-              <template #icon>
-                <Switch />
-              </template>
-              {{ isExpanded ? "收缩" : "展开" }}
-            </el-button>
-          </div>
         </div>
         <!-- API权限树 -->
         <el-tree
           ref="apiPermTreeRef"
-          node-key="apiValue"
+          node-key="value"
           show-checkbox
           :data="apiPermOptions"
           :filter-node-method="handleApiPermFilter"
           :default-expand-all="true"
-          check-strictly=false
           class="mt-5"
         >
           <template #default="{ data }">
@@ -320,6 +310,7 @@ const checkedRole = ref({});
 const assignPermDialogVisible = ref(false);
 
 const permKeywords = ref("");
+const apiPermKeywords = ref("")
 const isExpanded = ref(true);
 
 const parentChildLinked = ref(true);
@@ -506,6 +497,10 @@ watch(permKeywords, (val) => {
   permTreeRef.value.filter(val);
 });
 
+watch(apiPermKeywords, (val) => {
+  apiPermTreeRef.value.filter(val);
+});
+
 function handlePermFilter(value, data) {
   if (!value) return true;
   return data.label.includes(value);
@@ -522,8 +517,27 @@ function handleparentChildLinkedChange(val) {
 }
 
 // 分配API权限
-function handleAssignApiPermSubmit(val) {
-  console.log(val)
+function handleAssignApiPermSubmit() {
+  const roleId = checkedRole.value.id;
+  if (roleId) {
+    const checkedApiIds = apiPermTreeRef
+      .value.getCheckedNodes(false, true)
+      .map((node) => node.value);
+
+    loading.value = true;
+    // 去掉父节点
+    const filterCheckedApiIds = checkedApiIds.filter(item => item!== 0);
+    console.log(filterCheckedApiIds)
+    RoleAPI.updateRoleApiIds(roleId, filterCheckedApiIds)
+      .then(() => {
+        ElMessage.success("分配权限成功");
+        assignPermDialogVisible.value = false;
+        handleResetQuery();
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  }
 }
 
 onMounted(() => {
