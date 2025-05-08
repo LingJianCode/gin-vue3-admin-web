@@ -3,6 +3,18 @@
 基于 Vue3、Vite、JavaScript 和 Element-Plus 搭建的极简开箱即用企业级后台管理前端模板。在[vue3-element-admin-js](https://gitee.com/youlaiorg/vue3-element-admin-js)的基础上修改而来。
 在开发中由于URI冲突问题，对字典项路由地址进行了修改。增加了api权限分配功能。配套后端地址[my-ops-admin](https://gitee.com/LingJianCode/my-ops-admin)
 
+# 页面展示
+
+![login](./img/login.jpeg)
+
+![user_manage](./img/user_manage.jpeg)
+
+![role_menu](./img/role_menu.jpeg)
+
+![role_api](./img/role_api.jpeg)
+
+![menu](./img/menu.jpeg)
+
 ## 项目启动
 
 - **环境准备**
