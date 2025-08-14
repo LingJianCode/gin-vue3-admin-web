@@ -1,6 +1,6 @@
 {
-  "name": "my-ops-vue",
-  "description": "my-ops-vue",
+  "name": "gin-vue3-admin-web",
+  "description": "Vue3 + Vite + JavaScript + Element-Plus",
   "version": "0.0.1",
   "private": true,
   "type": "module",

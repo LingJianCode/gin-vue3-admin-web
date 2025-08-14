@@ -19,27 +19,6 @@
     >
       <div class="flex-center relative pb-5">
         <h2>{{ defaultSettings.title }}</h2>
-        <el-dropdown class="absolute! right-0">
-          <div class="cursor-pointer">
-            <el-icon><arrow-down /></el-icon>
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>
-                <el-tag>{{ defaultSettings.version }}</el-tag>
-              </el-dropdown-item>
-              <el-dropdown-item @click="setLoginCredentials('root', '123456')">
-                超级管理员: root/123456
-              </el-dropdown-item>
-              <el-dropdown-item @click="setLoginCredentials('admin', '123456')">
-                系统管理员: admin/123456
-              </el-dropdown-item>
-              <el-dropdown-item @click="setLoginCredentials('test', '123456')">
-                测试小游客: test/123456
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
       </div>
 
       <el-form ref="loginFormRef" :model="loginFormData" :rules="loginRules" size="large">
@@ -95,23 +74,12 @@
         <el-button :loading="loading" type="primary" class="w-full" @click="handleLoginSubmit">
           {{ t("login.login") }}
         </el-button>
-
-        <!-- 第三方登录 -->
-        <el-divider>
-          <el-text size="small">{{ t("login.otherLoginMethods") }}</el-text>
-        </el-divider>
-        <div class="flex-center gap-x-5 text-[var(--el-text-color-secondary)]">
-          <div class="i-svg:wechat" />
-          <div class="i-svg:qq" />
-          <div class="i-svg:github" />
-          <div class="i-svg:gitee" />
-        </div>
       </el-form>
     </div>
 
     <!-- 登录页底部 -->
     <el-text size="small" class="py-2.5! fixed bottom-0 text-center">
-      Copyright © 2025 my-ops-vue All Rights Reserved.
+      Copyright © 2025 gin-vue3-admin-web All Rights Reserved.
     </el-text>
   </div>
 </template>
@@ -224,7 +192,7 @@ function resolveRedirectTarget(query) {
   const defaultPath = "/";
 
   // 获取原始重定向路径
-  const rawRedirect = (query.redirect) || defaultPath;
+  const rawRedirect = query.redirect || defaultPath;
 
   try {
     // 6. 使用Vue Router解析路径

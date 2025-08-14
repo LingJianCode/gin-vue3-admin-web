@@ -19,7 +19,7 @@
 
       <!-- 刷新用户信息 -->
       <el-tooltip content="刷新用户信息" effect="dark" placement="bottom">
-        <el-icon  @click="refreshCurrentUserInfo"><Refresh /></el-icon>
+        <el-icon @click="refreshCurrentUserInfo"><Refresh /></el-icon>
       </el-tooltip>
     </template>
 
