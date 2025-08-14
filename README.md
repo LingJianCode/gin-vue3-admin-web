@@ -30,10 +30,10 @@
 
 ```bash
 # 克隆代码
-git clone https://gitee.com/LingJianCode/my-ops-vue.git
+git clone https://gitee.com/LingJianCode/gin-vue3-admin-web.git
 
 # 切换目录
-cd my-ops-vue
+cd gin-vue3-admin-web
 
 # 安装 pnpm
 npm install pnpm -g
