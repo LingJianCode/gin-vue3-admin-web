@@ -15,7 +15,7 @@
       <LangSelect />
 
       <!-- 通知下拉 -->
-      <NoticeDropdown />
+      <!-- <NoticeDropdown /> -->
 
       <!-- 刷新用户信息 -->
       <el-tooltip content="刷新用户信息" effect="dark" placement="bottom">
