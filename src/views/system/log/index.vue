@@ -2,10 +2,10 @@
   <div class="app-container">
     <div class="search-bar">
       <el-form ref="queryFormRef" :model="queryParams" :inline="true">
-        <el-form-item prop="keywords" label="关键字">
+        <el-form-item prop="userId" label="userId">
           <el-input
-            v-model="queryParams.keywords"
-            placeholder="日志内容"
+            v-model="queryParams.userId"
+            placeholder="userId"
             clearable
             @keyup.enter="handleQuery"
           />
@@ -32,15 +32,45 @@
 
     <el-card shadow="never">
       <el-table v-loading="loading" :data="pageData" highlight-current-row border>
-        <el-table-column label="操作时间" prop="createTime" width="180" />
-        <el-table-column label="操作人" prop="operator" width="120" />
-        <el-table-column label="日志模块" prop="module" width="100" />
-        <el-table-column label="日志内容" prop="content" min-width="200" />
-        <el-table-column label="IP 地址" prop="ip" width="150" />
-        <el-table-column label="地区" prop="region" width="150" />
-        <el-table-column label="浏览器" prop="browser" width="150" />
-        <el-table-column label="终端系统" prop="os" width="200" show-overflow-tooltip />
-        <el-table-column label="执行时间(ms)" prop="executionTime" width="150" />
+        <el-table-column label="操作人" prop="user.Nickname" />
+        <el-table-column label="方法" prop="method" />
+        <el-table-column label="URI" prop="path" />
+        <el-table-column label="状态" prop="status" />
+        <el-table-column label="IP" prop="ip" />
+        <el-table-column align="left" label="请求" prop="path" width="80">
+          <template #default="scope">
+            <div>
+              <el-popover v-if="scope.row.body" placement="left-start" :width="444">
+                <div class="popover-box">
+                  <pre>{{ fmtBody(scope.row.body) }}</pre>
+                </div>
+                <template #reference>
+                  <el-icon style="cursor: pointer"><warning /></el-icon>
+                </template>
+              </el-popover>
+
+              <span v-else>无</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column align="left" label="响应" prop="path" width="80">
+          <template #default="scope">
+            <div>
+              <el-popover v-if="scope.row.resp" placement="left-start" :width="444">
+                <div class="popover-box">
+                  <pre>{{ fmtBody(scope.row.resp) }}</pre>
+                </div>
+                <template #reference>
+                  <el-icon style="cursor: pointer"><warning /></el-icon>
+                </template>
+              </el-popover>
+              <span v-else>无</span>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="浏览器" prop="agent" />
+        <el-table-column label="执行时间(ms)" prop="latency" />
+        <el-table-column label="操作时间" prop="createdAt" />
       </el-table>
 
       <pagination
@@ -70,7 +100,7 @@ const total = ref(0);
 const queryParams = reactive({
   pageNum: 1,
   pageSize: 10,
-  keywords: "",
+  userId: 0,
   createTime: ["", ""],
 });
 
@@ -100,4 +130,12 @@ function handleResetQuery() {
 onMounted(() => {
   handleQuery();
 });
+
+const fmtBody = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch (_) {
+    return value;
+  }
+};
 </script>
